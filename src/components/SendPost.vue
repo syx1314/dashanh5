@@ -1,29 +1,31 @@
 <template>
    <div id='app'>
-     <div class='title'>生单页</div>
-     <div class='card address_box'>
-          <div class='send'>
-            <div>
+     <div class='title'>寄快递</div>
+     <div class='card'>
+       <div class='send'>
+            <div class="icon_box">
               <img src='https://cdn.kuaidi100.com/images/m/dispatch/ico_send.png'>
             </div>
             <div class='address_info' @click='selSendAddress'>
-              <div>{{sendName}} {{sendPhone}}}</div>
-              <div>{{goAddress ? goAddress : '请输入寄件地址'}}}</div>
+              <div v-if="sendName">{{sendName}} {{sendPhone}}</div>
+              <div v-else>新建寄件人</div>
+              <div>{{goAddress ? goAddress : '请输入寄件地址'}}</div>
             </div>
           </div>
        <div class='receive'>
-          <div>
+          <div class="icon_box">
             <img src='https://cdn.kuaidi100.com/images/m/dispatch/ico_shou.png'>
           </div>
          <div class='address_info' @click='selReceiveAddress'>
-           <div>{{receiveName}} {{receivePhone}}}</div>
-         <div>{{toAddress ? toAddress : '请输入收件地址'}}}</div>
+           <div v-if="receiveName">{{receiveName}} {{receivePhone}}}</div>
+           <div v-else>新建收件人</div>
+         <div>{{toAddress ? toAddress : '请输入收件地址'}}</div>
          </div>
        </div>
      </div>
-     <div class='card shopInfo'>
+     <div class='card goods_info_box'>
        <div class="sub_title">商品信息</div>
-       <van-radio-group v-model="shopName" direction="horizontal">
+       <van-radio-group v-model="shopName" direction="horizontal" class="shopNameRg">
          <van-radio name="猫粮">猫粮</van-radio>
          <van-radio name="衣服">衣服</van-radio>
          <van-radio name="鞋子">鞋子</van-radio>
@@ -32,7 +34,7 @@
        <input placeholder='请输入物品信息' v-model='shopName' class="shopName"/>
        <div class="weight_box">
          <span>预估重量</span>
-         <van-stepper v-model="wight" step="2"></van-stepper>
+         <van-stepper v-model="wight" class="numPicker"/>
        </div>
      </div>
      <div class='bottom'>
@@ -215,15 +217,16 @@ export default {
   .card {
     background-color: white;
     border-radius: 0.275rem;
-    padding: 10px;
-    margin: 0 10px;
-
+    padding: 0 15px;
+    margin: 10px 10px 0;
   }
    .send,
    .receive {
      overflow: hidden;
-     padding:10px 0;
-     div {
+     padding: 15px 0;
+     border-bottom: 1px solid #cccccc;
+     height: 60px;
+     .icon_box {
        float: left;
        vertical-align: center;
        img {
@@ -237,81 +240,69 @@ export default {
        display: inline;
        width: 90%;
        margin-left: 10px;
+       font-size: 16px;
+       div:nth-child(2) {
+         margin-top: 10px;
+       }
      }
    }
-  .shopInfo {
-    margin: 10px 10px;
-  }
-  .shopInfo  {
-     .shopName {
-       border: 0;
-       outline: none;
-       height: 20px;
-       margin-top: 10px;
-     }
-  }
-  .weight_box {
 
-    :nth-child(0) {
-      float: left;
-    }
-    :nth-child(1) {
+  .weight_box {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    .numPicker {
       float: right;
     }
   }
-
+  .goods_info_box {
+    padding: 15px;
+    overflow: hidden;
+    .shopNameRg {
+      padding-top: 10px;
+      margin-bottom: 10px;
+    }
+    .shopName {
+      display: block;
+      height: 40px;
+      width: 100%;
+      margin-top: 15px;
+      border: 1px solid #cccccc;
+      border-radius: 3px;
+      padding: 10px 0 10px 10px;
+    }
+  }
   .bottom {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 4rem;
+    height: 50px;
+    line-height: 50px;
     background-color: white;
-
-  }
-  .price {
-    margin-top: 0.5rem;
-    float: left;
-    white-space: pre-wrap;
-    margin-left: 1rem;
-    font-size: 0.8rem;
-  }
-  .price span {
-    float: left;
-    margin-left: 0.278rem;
-  }
-  .max_price {
-    float: left;
-    font-size: 2rem;
-    color: red;
-    font-weight: 500;
-  }
-  .my_price_box {
-    overflow: hidden;
-    margin-top: 1rem;
-  }
-  .my_price_box input {
-    float: left;
-    margin-top: -.2rem;
-    margin-right: 0.5rem;
-  }
-  .my_price_box span {
-    float: left;
-    margin-right: 0.5rem;
-  }
-  .createOrder {
-    float: right;
-    background-color: #317ee7;
-    min-width: 7rem;
-    height: 3rem;
-    line-height: 3rem;
-    border-radius: 0.1875rem;
-    margin-right: .625rem;
-    color: white;
-    text-align: center;
-    margin-top: 0.5rem;
-  }
-  .createOrderEnable {
-     background-color: #cccccc;
+    .price {
+      float: left;
+      white-space: pre-wrap;
+      margin-left: 10px;
+      font-size: 18px;
+      .max_price {
+        color: #f00;
+        font-size: 28px;
+      }
+    }
+    .createOrder {
+      float: right;
+      background-color: #317ee7;
+      height: 40px;
+      line-height: 40px;
+      width: 100px;
+      border-radius: 40px;
+      margin-top: 4px;
+      margin-right: 10px;
+      color: white;
+      text-align: center;
+    }
+    .createOrderEnable {
+      background-color: #cccccc;
+    }
   }
 </style>
