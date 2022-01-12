@@ -1,6 +1,8 @@
 <template>
    <div id='app'>
-     <div class='title'>寄快递</div>
+     <div class='title'>
+       <span>寄快递</span>
+     </div>
      <div class='card'>
        <div class='send'>
             <div class="icon_box">
@@ -36,6 +38,14 @@
          <span>预估重量</span>
          <van-stepper v-model="wight" class="numPicker"/>
        </div>
+     </div>
+     <div class='card goods_info_box'>
+       <div class="sub_title">保价(未保价物品最告赔6倍运费)</div>
+       <div class="weight_box">
+         <span>自定义货物价值</span>
+         <van-stepper v-model="wight" class="numPicker"/>
+       </div>
+       <span class="baojiaRule">与官网价格一致，请按实际重量填写，系统才能匹配最低价渠道 （拒收，原价，长超150cm,长宽高超250cm,需20元加长费）特别声明：德邦2KG-4KG，有的地方4-3KG比2kg便宜，一切以德邦官网价格为准，抛比8000</span>
      </div>
      <div class='bottom'>
        <div class='price'>
@@ -206,9 +216,13 @@ export default {
   .title {
     color: white;
     background-color: #317ee7;
-    text-align: center;
     font-size: 18px;
     padding: 15px;
+    span {
+      display: block;
+      width: 100px;
+      margin: auto;
+    }
   }
   .sub_title {
     font-size: 16px;
@@ -225,20 +239,21 @@ export default {
      overflow: hidden;
      padding: 15px 0;
      border-bottom: 1px solid #cccccc;
-     height: 60px;
+
      .icon_box {
        float: left;
        vertical-align: center;
        img {
          display: block;
          width: 25px;
+         height: 25px;
          margin-top: 10px;
        }
      }
      .address_info {
        float: left;
        display: inline;
-       width: 90%;
+       width: 80%;
        margin-left: 10px;
        font-size: 16px;
        div:nth-child(2) {
@@ -269,6 +284,14 @@ export default {
       border: 1px solid #cccccc;
       border-radius: 3px;
       padding: 10px 0 10px 10px;
+      .van-radio {
+        width: 50% !important;
+      }
+    }
+    .baojiaRule {
+      font-size: 14px;
+      color: #ff0000;
+      margin-top: 5px;
     }
   }
   .bottom {
