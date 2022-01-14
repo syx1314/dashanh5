@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 axios.defaults.timeout = 5000
-axios.defaults.baseURL = 'https://www.yunyangwl.com/'
+axios.defaults.baseURL = 'http://81.68.198.45/api.php/'
 // http request 拦截器
 axios.interceptors.request.use(
   config => {

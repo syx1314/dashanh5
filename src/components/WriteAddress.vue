@@ -60,14 +60,14 @@ export default {
   methods: {
     setData () {
       if (this.ads) {
-        this.uname = this.ads['contact']
+        this.uname = this.ads['person']
         this.phone = this.ads['mobile']
         this.province = this.ads['province'] + '/' + this.ads['city'] + '/' + this.ads['county'] + '/' + this.ads['town']
         this.address_info = this.ads['address']
       }
     },
     parseAddress () {
-      this.$fetch('/jdserver2/ParseAddressByJd?address=' + decodeURI(this.address + '&linkName=yywl-袁宇进'), '')
+      this.$fetch('/Expressorder/nlpAddress?address=' + decodeURI(this.address), '')
         .then((res) => {
           console.log(res)
           this.ads = res['result']

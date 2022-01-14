@@ -1,7 +1,7 @@
 <template>
    <div id='app'>
      <div class='title'>
-       <span>寄快递</span>
+       <span>{{title}}寄快递</span>
      </div>
      <div class='card'>
        <div class='send'>
@@ -32,8 +32,9 @@
          <van-radio name="衣服">衣服</van-radio>
          <van-radio name="鞋子">鞋子</van-radio>
          <van-radio name="其它">其它</van-radio>
+         <van-field v-model="shopName"  placeholder="请输入物品信息" class="shopName"/>
        </van-radio-group>
-       <input placeholder='请输入物品信息' v-model='shopName' class="shopName"/>
+
        <div class="weight_box">
          <span>预估重量</span>
          <van-stepper v-model="wight" class="numPicker"/>
@@ -43,9 +44,20 @@
        <div class="sub_title">保价(未保价物品最告赔6倍运费)</div>
        <div class="weight_box">
          <span>自定义货物价值</span>
-         <van-stepper v-model="wight" class="numPicker"/>
+         <van-field v-model="baojiaPrice"  placeholder="输入保价金额" class="baojiaPrice"/>
        </div>
        <span class="baojiaRule">与官网价格一致，请按实际重量填写，系统才能匹配最低价渠道 （拒收，原价，长超150cm,长宽高超250cm,需20元加长费）特别声明：德邦2KG-4KG，有的地方4-3KG比2kg便宜，一切以德邦官网价格为准，抛比8000</span>
+     </div>
+     <div class='card goods_info_box'>
+       <div class="sub_title">运费详情</div>
+       <div class="price_box">
+         <div>首重</div>
+         <div>￥6.5</div>
+       </div>
+       <div class="price_box">
+         <div>续重</div>
+         <div>￥2.5</div>
+       </div>
      </div>
      <div class='bottom'>
        <div class='price'>
@@ -64,6 +76,7 @@ export default {
   name: 'SendPost',
   data () {
     return {
+      title: '',
       goAddress: '',
       toAddress: '',
       sendName: '',
@@ -78,10 +91,14 @@ export default {
       maxPrice: 0,
       channel: '',
       myPrice: '',
-      show: false
+      show: false,
+      baojiaPrice: ''
     }
   },
   created () {
+    if (this.$route.query.type) {
+      console.log('类型' + this.$route.query.type)
+    }
     this.sendAddress = local.get('sendAddress')
     if (this.sendAddress) {
       this.sendName = this.sendAddress['contact']
@@ -265,6 +282,8 @@ export default {
   .weight_box {
     margin-top: 15px;
     margin-bottom: 10px;
+    overflow: hidden;
+    line-height: inherit;
     .numPicker {
       float: right;
     }
@@ -275,23 +294,42 @@ export default {
     .shopNameRg {
       padding-top: 10px;
       margin-bottom: 10px;
+      .van-radio {
+        width: 30%;
+        margin-top: 10px;
+      }
     }
     .shopName {
       display: block;
-      height: 40px;
-      width: 100%;
+      width: 60%;
       margin-top: 15px;
       border: 1px solid #cccccc;
       border-radius: 3px;
-      padding: 10px 0 10px 10px;
-      .van-radio {
-        width: 50% !important;
-      }
+    }
+    .baojiaPrice {
+      width: 150px;
+      float: right;
+      height: 40px;
+      line-height: 20px;
+      border: 1px solid #cccccc;
     }
     .baojiaRule {
       font-size: 14px;
       color: #ff0000;
       margin-top: 5px;
+    }
+  }
+  .price_box {
+    overflow: hidden;
+    div:nth-child(1) {
+      display: inline;
+      float: left;
+      color: #cccccc;
+    }
+    div:nth-child(2) {
+      display: inline;
+      float: right;
+      color: red;
     }
   }
   .bottom {
